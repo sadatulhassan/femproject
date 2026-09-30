@@ -43,8 +43,8 @@ def plane_stress_matrix(E, nu):
 if __name__ == "__main__":
 
     # Temporary test material
-    E = 70e9
-    nu = 0.33
+    E = 200e9
+    nu = 0.30
 
     D = plane_stress_matrix(E, nu)
 
