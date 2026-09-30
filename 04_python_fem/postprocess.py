@@ -169,7 +169,6 @@ def find_maximum_stresses(all_stresses, all_von_mises):
 # -------------------------------------------------
 # PRINT STRESS SUMMARY
 # -------------------------------------------------
-
 def print_stress_summary(all_stresses, all_von_mises):
 
     results = find_maximum_stresses(
@@ -187,17 +186,17 @@ def print_stress_summary(all_stresses, all_von_mises):
 
     print(
         f"Maximum σx       : "
-        f"{results['max_sigma_x'] / 1e6:.6f} MPa"
+        f"{results['max_sigma_x']:.6f} MPa"
     )
 
     print(
         f"Minimum σx       : "
-        f"{results['min_sigma_x'] / 1e6:.6f} MPa"
+        f"{results['min_sigma_x']:.6f} MPa"
     )
 
     print(
         f"Maximum |σx|     : "
-        f"{results['max_abs_sigma_x'] / 1e6:.6f} MPa"
+        f"{results['max_abs_sigma_x']:.6f} MPa"
     )
 
     print("\nNORMAL STRESS σy")
@@ -205,30 +204,30 @@ def print_stress_summary(all_stresses, all_von_mises):
 
     print(
         f"Maximum σy       : "
-        f"{results['max_sigma_y'] / 1e6:.6f} MPa"
+        f"{results['max_sigma_y']:.6f} MPa"
     )
 
     print(
         f"Minimum σy       : "
-        f"{results['min_sigma_y'] / 1e6:.6f} MPa"
+        f"{results['min_sigma_y']:.6f} MPa"
     )
 
     print(
         f"Maximum |σy|     : "
-        f"{results['max_abs_sigma_y'] / 1e6:.6f} MPa"
+        f"{results['max_abs_sigma_y']:.6f} MPa"
     )
 
     print("\nSHEAR STRESS τxy")
     print("-" * 70)
 
     print(
-        f"Maximum τxy       : "
-        f"{results['max_tau_xy'] / 1e6:.6f} MPa"
+        f"Maximum τxy      : "
+        f"{results['max_tau_xy']:.6f} MPa"
     )
 
     print(
-        f"Minimum τxy       : "
-        f"{results['min_tau_xy'] / 1e6:.6f} MPa"
+        f"Minimum τxy      : "
+        f"{results['min_tau_xy']:.6f} MPa"
     )
 
     print("\nVON MISES STRESS")
@@ -236,7 +235,7 @@ def print_stress_summary(all_stresses, all_von_mises):
 
     print(
         f"Maximum Von Mises : "
-        f"{results['max_von_mises'] / 1e6:.6f} MPa"
+        f"{results['max_von_mises']:.6f} MPa"
     )
 
     print("=" * 70)

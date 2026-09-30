@@ -186,30 +186,83 @@ def read_ansys_cdb(filename):
 
     return node_array, element_array
 
+def classify_elements(elements):
+    """
+    Separate normal 4-node elements from
+    degenerate elements with a repeated node.
+    """
 
+    q4_elements = []
+    degenerate_elements = []
+
+    for i, element in enumerate(elements):
+
+        # Check whether all four nodes are different
+        if len(set(element)) == 4:
+            q4_elements.append(element)
+        else:
+            degenerate_elements.append((i, element))
+
+    return (
+        np.array(q4_elements, dtype=int),
+        degenerate_elements
+    )
+
+def correct_element_orientation(nodes, elements):
+    """
+    Make Q4 elements counter-clockwise.
+    """
+
+    corrected_elements = []
+
+    for element in elements:
+
+        coords = nodes[element]
+
+        area = 0.0
+
+        for i in range(4):
+
+            x1, y1 = coords[i]
+            x2, y2 = coords[(i + 1) % 4]
+
+            area += x1 * y2 - x2 * y1
+
+        area = 0.5 * area
+
+        if area < 0:
+            element = element[::-1]
+
+        corrected_elements.append(element)
+
+    return np.array(corrected_elements, dtype=int)
 # =====================================================
 # TEST
 # =====================================================
-
 if __name__ == "__main__":
 
     nodes, elements = read_ansys_cdb("my_mesh.cdb")
 
-    print()
+    q4_elements, degenerate_elements = classify_elements(elements)
+
     print("========================================")
     print("          ANSYS CDB MESH")
     print("========================================")
 
-    print("Number of nodes    :", len(nodes))
-    print("Number of elements :", len(elements))
+    print(f"Number of nodes       : {len(nodes)}")
+    print(f"Total elements        : {len(elements)}")
+    print(f"Q4 elements           : {len(q4_elements)}")
+    print(f"Degenerate elements   : {len(degenerate_elements)}")
 
-    print()
-    print("First 5 nodes:")
+    print("\nFirst 5 nodes:")
     print(nodes[:5])
 
-    print()
-    print("First 5 elements:")
-    print(elements[:5])
+    print("\nFirst 5 Q4 elements:")
+    print(q4_elements[:5])
 
-    print()
+    print("\nDegenerate elements:")
+
+    for index, element in degenerate_elements:
+        print(f"Element {index + 1}: {element}")
+
     print("========================================")
